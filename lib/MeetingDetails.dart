@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'Login.dart';
@@ -12,8 +11,8 @@ class ServerSett extends StatefulWidget {
 
 class _ServerSettState extends State<ServerSett> {
   final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom");
-  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
+  final roomText = TextEditingController();
+  final subjectText = TextEditingController();
   var isAudioOnly = true;
   var isAudioMuted = true;
   var isVideoMuted = true;
@@ -38,9 +37,6 @@ class _ServerSettState extends State<ServerSett> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Jitsi Flutter'),
-        ),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
@@ -48,36 +44,61 @@ class _ServerSettState extends State<ServerSett> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                SizedBox(height: kToolbarHeight,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    // change the name as you like cuz this page cannot be a login page
+                    child: Text('Room Details',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 40.0),
+                    ),
+                  ),
+                  Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 65.0,),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: 83.0,
+                            height: 1.5,
+                            color: Colors.black,            
+                          ),
+                        ),
+                      ),
                 SizedBox(
-                  height: 24.0,
+                  height: 55.0,
                 ),
                 TextField(
                   controller: roomText,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Room",
+                    hintText: "Enter the Room Name",
+
                   ),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 26.0,
                 ),
                 TextField(
                   controller: subjectText,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Subject",
+                    hintText: "Enter the subject",
                   ),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 26.0,
                 ),
                 TextField(
-                  controller: serverText,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Server URL (Optional)",
-                      hintText: "Hint: Leave empty for meet.jitsi.si"),
-                ),
+                        controller: serverText,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Server URL",
+                          hintText: "Enter the server URL (optional)",
+                        ),
+                        
+                      ),
                 SizedBox(
                   height: 32.0,
                 ),
@@ -85,31 +106,39 @@ class _ServerSettState extends State<ServerSett> {
                   title: Text("Audio Only"),
                   value: isAudioOnly,
                   onChanged: _onAudioOnlyChanged,
+                  checkColor: Colors.white,
+                  activeColor: Colors.black,
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 8.0,
                 ),
                 CheckboxListTile(
                   title: Text("Audio Muted"),
                   value: isAudioMuted,
                   onChanged: _onAudioMutedChanged,
+                  checkColor: Colors.white,
+                  activeColor: Colors.black,
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 8.0,
                 ),
                 CheckboxListTile(
                   title: Text("Video Muted"),
                   value: isVideoMuted,
                   onChanged: _onVideoMutedChanged,
+                  checkColor: Colors.white,
+                  activeColor: Colors.black,
                 ),
                 SizedBox(
-                  height: 32.0,
+                  height: 22.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50),
+                  padding: const EdgeInsets.only(left: 50,right: 50),
                   child: SizedBox(
                     height: 64.0,
                     width: double.maxFinite,
+                    child:Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5,),
                     child: RaisedButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0),
@@ -119,15 +148,21 @@ class _ServerSettState extends State<ServerSett> {
                       },
                       child: Text(
                         "Create Meeting",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
                       ),
-                      color: Colors.blue,
+                      color: Colors.black,
+                    ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 48.0,
-                ),
+                Padding(padding: const EdgeInsets.all(13),),
+                    SizedBox(height: 183,),
+                    Text(
+                      'Powered by Jitsi.Meet',textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey[400]),
+                    ),
               ],
             ),
           ),

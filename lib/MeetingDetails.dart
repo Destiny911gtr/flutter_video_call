@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
+import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'Login.dart';
 
 class ServerSett extends StatefulWidget {
@@ -42,128 +43,179 @@ class _ServerSettState extends State<ServerSett> {
             horizontal: 16.0,
           ),
           child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: kToolbarHeight,),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    // change the name as you like cuz this page cannot be a login page
-                    child: Text('Room Details',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 40.0),
-                    ),
-                  ),
-                  Padding(
-                        padding: const EdgeInsets.only(top: 0.0, left: 65.0,),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            width: 83.0,
-                            height: 1.5,
-                            color: Colors.black,            
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                // change the name as you like cuz this page cannot be a login page
+                                child: Text(
+                                  'Room Details',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 40.0),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 50.0,
+                                  right: 130.0,
+                                ),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    width: 100.0,
+                                    height: 1.5,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        ],
                       ),
-                SizedBox(
-                  height: 55.0,
-                ),
-                TextField(
-                  controller: roomText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Room",
-                    hintText: "Enter the Room Name",
-
-                  ),
-                ),
-                SizedBox(
-                  height: 26.0,
-                ),
-                TextField(
-                  controller: subjectText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Subject",
-                    hintText: "Enter the subject",
-                  ),
-                ),
-                SizedBox(
-                  height: 26.0,
-                ),
-                TextField(
-                        controller: serverText,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Server URL",
-                          hintText: "Enter the server URL (optional)",
-                        ),
-                        
-                      ),
-                SizedBox(
-                  height: 32.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Audio Only"),
-                  value: isAudioOnly,
-                  onChanged: _onAudioOnlyChanged,
-                  checkColor: Colors.white,
-                  activeColor: Colors.black,
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Audio Muted"),
-                  value: isAudioMuted,
-                  onChanged: _onAudioMutedChanged,
-                  checkColor: Colors.white,
-                  activeColor: Colors.black,
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Video Muted"),
-                  value: isVideoMuted,
-                  onChanged: _onVideoMutedChanged,
-                  checkColor: Colors.white,
-                  activeColor: Colors.black,
-                ),
-                SizedBox(
-                  height: 22.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50,right: 50),
-                  child: SizedBox(
-                    height: 64.0,
-                    width: double.maxFinite,
-                    child:Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5,),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      onPressed: () {
-                        _joinMeeting();
-                      },
-                      child: Text(
-                        "Create Meeting",
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
-                      ),
-                      color: Colors.black,
                     ),
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextField(
+                            controller: roomText,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Name",
+                              hintText: "Enter the Room Name",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 26.0,
+                          ),
+                          TextField(
+                            controller: subjectText,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Subject",
+                              hintText: "What the room is about",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 26.0,
+                          ),
+                          TextField(
+                            controller: serverText,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Server URL",
+                              hintText: "Enter the server URL (optional)",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 26.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
+                            child: SizedBox(
+                              height: 64.0,
+                              width: double.maxFinite,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 5,
+                                  bottom: 5,
+                                ),
+                                child: RaisedButton(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                  ),
+                                  onPressed: () {
+                                    _joinMeeting();
+                                  },
+                                  child: Text(
+                                    "Create Meeting",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 26.0,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: <Widget>[
+                          ConfigurableExpansionTile(
+                            bottomBorderOn: false,
+                            topBorderOn: false,
+                            animatedWidgetFollowingHeader: const Icon(
+                              Icons.expand_more,
+                              color: const Color(0xFF707070),
+                            ),
+                            headerExpanded: Flexible(
+                                child: Center(child: Text("Additional options"))),
+                            header: Container(
+                                color: Colors.transparent,
+                                child: Center(child: Text("Additional options"))),
+                            children: [
+                              CheckboxListTile(
+                                title: Text("Audio Only"),
+                                value: isAudioOnly,
+                                onChanged: _onAudioOnlyChanged,
+                                checkColor: Colors.white,
+                                activeColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                              CheckboxListTile(
+                                title: Text("Audio Muted"),
+                                value: isAudioMuted,
+                                onChanged: _onAudioMutedChanged,
+                                checkColor: Colors.white,
+                                activeColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                              CheckboxListTile(
+                                title: Text("Video Muted"),
+                                value: isVideoMuted,
+                                onChanged: _onVideoMutedChanged,
+                                checkColor: Colors.white,
+                                activeColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 22.0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(padding: const EdgeInsets.all(13),),
-                    SizedBox(height: 183,),
-                    Text(
-                      'Powered by Jitsi.Meet',textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey[400]),
-                    ),
-              ],
+              ),
             ),
           ),
         ),
